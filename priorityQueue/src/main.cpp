@@ -7,8 +7,6 @@ int main(int argc, char const *argv[]) {
     heap->insert(i);
   }
 
-  std::cout << "Insertion done" << '\n';
-
   for (size_t i = 0; i < 10; i++) {
     std::cout << heap->pop() << '\n';
   }

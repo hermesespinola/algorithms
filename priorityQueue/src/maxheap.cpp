@@ -8,12 +8,6 @@ Heap::Heap (unsigned int initialSize){
   length = 0;
 }
 
-Heap::Heap() {
-  heap = (int *) malloc(100 * sizeof(int));
-  size = 100;
-  length = 0;
-}
-
 Heap::~Heap() {
   delete &size;
   delete &length;
@@ -80,7 +74,8 @@ void Heap::insert(int value) {
 }
 
 void Heap::clear() {
-  std::fill_n(heap, length, 0);
+  free(heap);
+  heap = (int *) malloc(size * sizeof(int));
   length = 0;
 }
 

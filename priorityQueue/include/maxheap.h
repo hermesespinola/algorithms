@@ -7,7 +7,7 @@ private:
 
 public:
   Heap (unsigned int initialSize);
-  Heap();
+  Heap() : Heap(100) {};
   virtual ~Heap();
   void insert(int value);
   void clear();
