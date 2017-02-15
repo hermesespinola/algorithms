@@ -1,15 +1,15 @@
 #include "maxheap.h"
-#include <algorithm>
 #include <iostream>
+#include <algorithm>
 
 Heap::Heap (unsigned int initialSize){
-  *heap = heap[initialSize];
+  heap = (int *) malloc(initialSize * sizeof(int));
   size = initialSize;
   length = 0;
 }
 
 Heap::Heap() {
-  *heap = heap[100];
+  heap = (int *) malloc(100 * sizeof(int));
   size = 100;
   length = 0;
 }
@@ -17,6 +17,7 @@ Heap::Heap() {
 Heap::~Heap() {
   delete &size;
   delete &length;
+  free(heap);
   delete &heap;
 }
 
@@ -26,12 +27,8 @@ void Heap::resize() {
 
 void Heap::shift(unsigned int child, unsigned int parent) {
   int tmp = heap[child];
-  std::cout << "temp: " << tmp << '\n';
-  std::cout << "parent: " << heap[parent] << '\n';
   heap[child] = heap[parent];
-  std::cout << "new child: " << heap[child] << '\n';
   heap[parent] = tmp;
-  std::cout << "new parent: " << heap[parent] << '\n';
 }
 
 int Heap::pop() {
@@ -64,31 +61,22 @@ void Heap::heapifyDown(unsigned int i) {
 }
 
 void Heap::maxHeapify(unsigned int i) {
-  std::cout << "last element: " << heap[i] << '\n';
-  // do {
-  //   int parent = (i + 1) / 2 - 1;
-  //   std::cout << "parent: " << parent << " value: " << heap[i] << '\n';
-  //   if (heap[i] > heap[parent]) {
-  //     shift(i, parent);
-  //   } else break;
-  //   i = parent;
-  // } while(i > 0);
+  do {
+    int parent = (i + 1) / 2 - 1;
+    if (heap[i] > heap[parent]) {
+      shift(i, parent);
+    } else break;
+    i = parent;
+  } while(i > 0);
 }
 
 void Heap::insert(int value) {
   // if (length >= size)
   //   resize();
   heap[length] = value;
-  std::cout << "last element: " << heap[length] << '\n';
-  // if (length > 0)
-  //   maxHeapify(length);
-  std::cout << "last element: " << heap[length] << '\n';
+  if (length > 0)
+    maxHeapify(length);
   length++;
-  std::cout << "The heap so far: " << ' ';
-  for (unsigned int i = 0; i < length; i++) {
-    std::cout << heap[i] << ' ';
-  }
-  std::cout << '\n';
 }
 
 void Heap::clear() {

@@ -1,7 +1,7 @@
 class Heap {
 private:
   unsigned int size, length;
-  int heap[];
+  int *heap;
   void shift(unsigned int child, unsigned int parent);
   void resize();
 
