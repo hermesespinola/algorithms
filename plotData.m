@@ -4,7 +4,8 @@ function plotData(filePath, t, xlbl, ylbl, legends, targetPath)
 %   population and profit.
 
 data = load(filePath);
-x = data(:, 1); y = data(:,2:end);
+x = data(:, 1);
+y = data(:, 2:end);
 
 hf = figure; % open a new figure window
 

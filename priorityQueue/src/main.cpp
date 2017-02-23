@@ -12,7 +12,7 @@ int main(int argc, char const *argv[]) {
 
   // =========================== Random input =================================
   // file writer
-  ofstream output("./bigData/outRand.txt");
+  ofstream randOut("./bigData/outRand.txt");
 
   random_device rd;   // Used to initialize seed engine
   mt19937 rng(rd());  // random number engine
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 1; i < 10000; i+=10) {
     q = new PriorityQueue(i);
-    output << i << ",";
+    randOut << i << ",";
 
     clock_t start = clock();
 
@@ -29,14 +29,14 @@ int main(int argc, char const *argv[]) {
       auto r = uni(rng);
       q->insert(r);
     }
-    output << (clock() - start) << ",";
+    randOut << (clock() - start) << ",";
 
     // maximum
     start = clock();
     for (int j = 0; j < i; j++) {
       q->maximum();
     }
-    output << (clock() - start) << ",";
+    randOut << (clock() - start) << ",";
 
     // increase key
     start = clock();
@@ -44,23 +44,98 @@ int main(int argc, char const *argv[]) {
       auto r = uni(rng);
       q->increaseKey(j, r);
     }
-    output << (clock() - start) << ",";
+    randOut << (clock() - start) << ",";
 
     // extract max
     start = clock();
     for (int j = 0; j < i; j++) {
       q->extractMax();
     }
-    output << (clock() - start) << endl;
+    randOut << (clock() - start) << endl;
 
     delete q;
   }
+  randOut.close();
 
   // =========================== Best case =================================
+  // file writer
+  ofstream BestOut("./bigData/outBest.txt");
+  for (int i = 1; i < 10000; i+=10) {
+    q = new PriorityQueue(i);
+    BestOut << i << ",";
 
+    clock_t start = clock();
 
-  // =========================== Worst input =================================
+    // insert
+    for (int j = i; j > 0; j--) {
+      q->insert(j);
+    }
+    BestOut << (clock() - start) << ",";
 
+    // maximum
+    start = clock();
+    for (int j = 0; j < i; j++) {
+      q->maximum();
+    }
+    BestOut << (clock() - start) << ",";
+
+    // increase key
+    start = clock();
+    for (int j = 0; j < i; j++) {
+      q->increaseKey(j, 1);
+    }
+    BestOut << (clock() - start) << ",";
+
+    // extract max
+    start = clock();
+    for (int j = 0; j < i; j++) {
+      q->extractMax();
+    }
+    BestOut << (clock() - start) << endl;
+
+    delete q;
+  }
+  BestOut.close();
+
+    // =========================== Worst input =================================
+    // file writer
+    ofstream worstOut("./bigData/outWorst.txt");
+    for (int i = 1; i < 10000; i+=10) {
+      q = new PriorityQueue(i);
+      worstOut << i << ",";
+
+      clock_t start = clock();
+
+      // insert
+      for (int j = 0; j < i; j++) {
+        q->insert(j);
+      }
+      worstOut << (clock() - start) << ",";
+
+      // maximum
+      start = clock();
+      for (int j = 0; j < i; j++) {
+        q->maximum();
+      }
+      worstOut << (clock() - start) << ",";
+
+      // increase key
+      start = clock();
+      for (int j = i - 1; j >= 0; j--) {
+        q->increaseKey(j, i + 1);
+      }
+      worstOut << (clock() - start) << ",";
+
+      // extract max
+      start = clock();
+      for (int j = 0; j < i; j++) {
+        q->extractMax();
+      }
+      worstOut << (clock() - start) << endl;
+
+      delete q;
+    }
+    worstOut.close();
 
   return 0;
 }
