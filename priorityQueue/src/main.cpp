@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
 
   for (int i = 1; i < 10000; i+=10) {
     q = new PriorityQueue(i);
-    randOut << i << ",";
+    randOut << i << ',';
 
     clock_t start = clock();
 
@@ -29,14 +29,14 @@ int main(int argc, char const *argv[]) {
       auto r = uni(rng);
       q->insert(r);
     }
-    randOut << (clock() - start) << ",";
+    randOut << (clock() - start) << ',';
 
     // maximum
     start = clock();
     for (int j = 0; j < i; j++) {
       q->maximum();
     }
-    randOut << (clock() - start) << ",";
+    randOut << (clock() - start) << ',';
 
     // increase key
     start = clock();
@@ -44,7 +44,7 @@ int main(int argc, char const *argv[]) {
       auto r = uni(rng);
       q->increaseKey(j, r);
     }
-    randOut << (clock() - start) << ",";
+    randOut << (clock() - start) << ',';
 
     // extract max
     start = clock();
@@ -62,7 +62,7 @@ int main(int argc, char const *argv[]) {
   ofstream BestOut("./bigData/outBest.txt");
   for (int i = 1; i < 10000; i+=10) {
     q = new PriorityQueue(i);
-    BestOut << i << ",";
+    BestOut << i << ',';
 
     clock_t start = clock();
 
@@ -70,21 +70,21 @@ int main(int argc, char const *argv[]) {
     for (int j = i; j > 0; j--) {
       q->insert(j);
     }
-    BestOut << (clock() - start) << ",";
+    BestOut << (clock() - start) << ',';
 
     // maximum
     start = clock();
     for (int j = 0; j < i; j++) {
       q->maximum();
     }
-    BestOut << (clock() - start) << ",";
+    BestOut << (clock() - start) << ',';
 
     // increase key
     start = clock();
     for (int j = 0; j < i; j++) {
       q->increaseKey(j, 1);
     }
-    BestOut << (clock() - start) << ",";
+    BestOut << (clock() - start) << ',';
 
     // extract max
     start = clock();
@@ -102,7 +102,7 @@ int main(int argc, char const *argv[]) {
     ofstream worstOut("./bigData/outWorst.txt");
     for (int i = 1; i < 10000; i+=10) {
       q = new PriorityQueue(i);
-      worstOut << i << ",";
+      worstOut << i << ',';
 
       clock_t start = clock();
 
@@ -110,21 +110,21 @@ int main(int argc, char const *argv[]) {
       for (int j = 0; j < i; j++) {
         q->insert(j);
       }
-      worstOut << (clock() - start) << ",";
+      worstOut << (clock() - start) << ',';
 
       // maximum
       start = clock();
       for (int j = 0; j < i; j++) {
         q->maximum();
       }
-      worstOut << (clock() - start) << ",";
+      worstOut << (clock() - start) << ',';
 
       // increase key
       start = clock();
       for (int j = i - 1; j >= 0; j--) {
         q->increaseKey(j, i + 1);
       }
-      worstOut << (clock() - start) << ",";
+      worstOut << (clock() - start) << ',';
 
       // extract max
       start = clock();
