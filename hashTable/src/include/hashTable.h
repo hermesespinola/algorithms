@@ -22,7 +22,7 @@ public:
 };
 
 template<class K, class V>
-class hashTable{
+class HashTable{
 
 private:
   int n;
@@ -30,11 +30,15 @@ private:
   Node<K, V>* table;
 
 public:
-  hashTable(int size){
+  template<class F, class G>
+  HashTable(int size) {
     n = size;
     m = 0;
-    table = new Node<K, V> [size];
+    table = new Node<F, G> [size];
   }
+
+  template<class F, class G>
+  HashTable() : HashTable<F, G>(INIT_CAP) {};
 
   int hash(K key){
     return 0;
