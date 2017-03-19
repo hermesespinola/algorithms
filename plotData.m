@@ -1,7 +1,5 @@
 function plotData(filePath, maxIn, t, xlbl, ylbl, legends, targetPath, reshapeSize)
 %PLOTDATA Plots the data points in a file into a new figure
-%   PLOTDATA(filePath) plots the data points and gives the figure axes labels of
-%   population and profit.
 
 data = load(filePath);
 

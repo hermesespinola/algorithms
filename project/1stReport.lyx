@@ -1,0 +1,168 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Analysis of Algorithms
+\begin_inset Newline newline
+\end_inset
+
+Final Project
+\end_layout
+
+\begin_layout Title
+First Report
+\end_layout
+
+\begin_layout Date
+March 15, 2017
+\end_layout
+
+\begin_layout Author
+A01631246 - Miguel Miranda
+\begin_inset Newline newline
+\end_inset
+
+A01631731 - Alejandro Güereca
+\begin_inset Newline newline
+\end_inset
+
+A01631677 - Hermes Espínola
+\end_layout
+
+\begin_layout Section*
+Proposal
+\end_layout
+
+\begin_layout Standard
+A graph-based database for storing musical bands' discography.
+ Some examples of products similar to this one are Last.fm, Pandora, Spotify
+ and YouTube.
+\end_layout
+
+\begin_layout Section*
+Requirements
+\end_layout
+
+\begin_layout Subsection*
+Functional
+\end_layout
+
+\begin_layout Itemize
+Read the discography of a band.
+\end_layout
+
+\begin_layout Itemize
+Group similar bands with a numerical value [0..1)
+\end_layout
+
+\begin_layout Itemize
+Given a band, find similar bands.
+\end_layout
+
+\begin_layout Itemize
+Given two bands, find a path between them.
+\end_layout
+
+\begin_deeper
+\begin_layout Subsection*
+Non functional
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Dynamic memory access, so the database doesn't need to be fully loaded in
+ memory.
+\end_layout
+
+\begin_layout Itemize
+Data integrity and the less redundancy possible.
+\end_layout
+
+\begin_layout Itemize
+Scalability.
+\end_layout
+
+\begin_layout Section*
+Implementation
+\end_layout
+
+\begin_layout Standard
+Each band is stored as a graph.
+ The node contains the band, information of the band and its discography,
+ stored in a hash table.
+ Each discography can be sorted by different values, such as name or year.
+ The database is stored in partitions, which can be loaded by accessing
+ a B-tree.
+\end_layout
+
+\end_body
+\end_document
