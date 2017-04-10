@@ -1,10 +1,10 @@
 #include <iostream>
 #include "priorityqueue.cpp"
 #include <vector>
+#include <random>
 #include <unordered_map>
 #include <unordered_set>
 #include <stdlib.h>
-#include <stdio.h> // FIXME: replace to include NULL
 
 using namespace std;
 
@@ -29,9 +29,9 @@ typedef struct graph Graph;
 typedef unordered_map<Node*, unordered_map<Node*, unsigned>> WeightMap;
 
 void initialize_single_source(Graph *G, Node *source) {
-  for (unsigned i = 0; i < G->V.size(); i++) { // FIXME: vector.lenght (?)
-    G->V[i].distance = 99999999;      // TODO: find a MAXINT constant
-    G->V[i].predecesor = NULL;    // FIXME: find include
+  for (unsigned i = 0; i < G->V.size(); i++) {
+    G->V[i].distance = 99999999;
+    G->V[i].predecesor = NULL;
   }
   source->distance = 0;
 }
@@ -58,5 +58,27 @@ void dijkstra (Graph *G, WeightMap w, Node *s) {
 }
 
 int main(int argc, char const *argv[]) {
-  return 0;
+  // Initialize graph
+  random_device rd;   // Used to initialize seed engine
+  mt19937 rng(rd());  // random number engine
+  uniform_real_distribution<float> uni(0, 1); // unbiased
+
+  unsigned v_count = 10, epsilon = 0.5;
+  Graph *G = (Graph *) malloc(sizeof(Graph));
+  WeightMap *w = new WeightMap();
+
+  for (unsigned i = 0; i < v_count; i++) {
+    Node *n = (Node *) malloc(sizeof(Node));
+    G->V[i].adj.push_back(*n); // FIXME: wtf
+  }
+
+  for (unsigned i = 0; i < v_count - 1; i++)
+    for (unsigned j = 1; j < v_count; j++) {
+      float alpha = uni(rng);
+      if (alpha > epsilon) {
+        G->V[i].adj.push_back(G->V[j]);
+        G->V[j].adj.push_back(G->V[i]);
+      }
+    }
 }
+
