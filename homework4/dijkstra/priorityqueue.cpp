@@ -3,36 +3,33 @@
 
 using namespace std;
 
+template <class T>
 class PriorityQueue {
   private:
-    Heap *heap;
+    Heap<T> *heap;
 
   public:
     PriorityQueue(unsigned int size){
-      heap = new Heap(size);
+      heap = new Heap<T>(size);
     }
 
-    void printValues() {
-      heap->printValues();
-    }
-
-    void insert(int value) {
+    void insert(T value) {
       heap->insert(value);
     }
 
-    int extractMin() {
+    T extractMin() {
       return heap->pop();
     }
 
-    bool increaseKey(int index, int amount) {
-      heap->increase(index, amount);
-    }
-
-    int minimum() {
+    T minimum() {
       return heap->peek();
     }
 
     bool isFull() {
       return heap->isFull();
+    }
+
+    bool isEmpty() {
+      return heap->isEmpty();
     }
 };

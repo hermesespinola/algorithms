@@ -1,13 +1,14 @@
 #include <functional>
 
 unsigned int size, length;
-int *heap;
 
+template <class T>
 class Heap {
   private:
     unsigned int size, length;
+    T *heap;
     void shift(unsigned int child, unsigned int parent) {
-      int tmp = heap[child];
+      T tmp = heap[child];
       heap[child] = heap[parent];
       heap[parent] = tmp;
     }
@@ -43,8 +44,8 @@ class Heap {
     }
 
   public:
-    Heap (unsigned int initialSize) {
-      heap = (int *) malloc(initialSize * sizeof(int));
+    Heap(unsigned int initialSize) {
+      heap = (T *) malloc(initialSize * sizeof(T));
       size = initialSize;
       length = 0;
     }
@@ -54,7 +55,7 @@ class Heap {
       delete &length;
       delete &heap;
     }
-    void insert(int value) {
+    void insert(T value) {
       if (length == size)
         resize();
       heap[length] = value;
@@ -65,13 +66,8 @@ class Heap {
 
     void clear() {
       free(heap);
-      heap = (int *) malloc(size * sizeof(int));
+      heap = (T *) malloc(size * sizeof(T));
       length = 0;
-    }
-
-    void increase(int i, int key) {
-      heap[i] = heap[i] + key;
-      minHeapify(i);
     }
 
     bool isEmpty() {
@@ -82,15 +78,15 @@ class Heap {
       return length == size;
     }
 
-    int peek() {
+    T peek() {
       return heap[0];
     }
 
-    int pop() {
+    T pop() {
       if (length <= 0)
         throw std::length_error("Empty heap");
       length--;
-      int r = heap[0];
+      T r = heap[0];
       heap[0] = heap[length];
       heap[length] = 0;
       if (length > 1) {
@@ -101,11 +97,5 @@ class Heap {
 
     int getSize() {
       return size;
-    }
-
-    void printValues() {
-      for (int i = 0; i < length; i++)
-        std::cout << heap[i] << ", ";
-      std::cout << std::endl;
     }
 };
