@@ -1,6 +1,8 @@
 #include <iostream>
 #include <random>
 #include <limits.h>
+#include <cmath>
+#include <time.h>
 
 using namespace std;
 
@@ -9,7 +11,7 @@ bool BLACK = 1;
 
 struct rbnode {
   int key;
-  rbnode *p m
+  rbnode *p;
   rbnode *left;
   rbnode *right;
   bool color;
@@ -32,14 +34,14 @@ private:
   rbnode *root;
   rbnode *nil;
 public:
-  RedBlackTree(){
+  RedBlackTree() {
     this->size = 0;
     this->nil = new rbnode();
     this->root = this->nil;
     this->nil->p = this->nil;
   }
 
-  int get_size(){
+  int get_size() {
     return this->size;
   }
 
@@ -47,30 +49,30 @@ public:
     print_inorder_inverse(this->root, 1);
   }
 
-  void print_inorder_inverse(rbnode *node, int mult){
-    if(node->right != NULL){
+  void print_inorder_inverse(rbnode *node, int mult) {
+    if(node->right != NULL) {
       print_inorder_inverse(node->right, mult+1);
     }
-    for(int i = 1; i < mult; i++){
+    for(int i = 1; i < mult; i++) {
       cout << "\t";
     }
     cout << "[" << node->key << ", ";
-    if(node->color){
+    if(node->color) {
       cout << "B";
     }
     else cout << "R";
     cout << "]" << endl;
-    if(node->left != NULL){
+    if(node->left != NULL) {
       print_inorder_inverse(node->left, mult+1);
     }
   }
 
-  void insert(int key){
+  void insert(int key) {
     rbnode *z = new rbnode(key);
     rbnode *y = this->nil;
     rbnode *x = this->root;
 
-    while(x != this->nil){
+    while(x != this->nil) {
       y = x;
       if(z->key < x->key)
         x = x->left;
@@ -78,7 +80,7 @@ public:
         x = x->right;
     }
     z->p = y;
-    if(y == this->nil){
+    if(y == this->nil) {
       this->root = z;
     }
     else if(z->key < y->key)
@@ -94,49 +96,49 @@ public:
     rb_insert_fixup(z);
   }
 
-  void left_rotate(rbnode *x){
+  void left_rotate(rbnode *x) {
     rbnode *y = x->right;
     x->right = y->left;
-    if(y->left != this->nil){
+    if(y->left != this->nil) {
       y->left->p = x;
     }
     y->p = x->p;
-    if(x->p == this->nil){
+    if(x->p == this->nil) {
       this->root = y;
     }
-    else if(x == x->p->left){
+    else if(x == x->p->left) {
       x->p->left = y;
     }
-    else{
+    else {
       x->p->right = y;
     }
     y->left = x;
     x->p = y;
   }
 
-  void right_rotate(rbnode *x){
+  void right_rotate(rbnode *x) {
     rbnode *y = x->left;
     x->left = y->right;
-    if(y->right != this->nil){
+    if(y->right != this->nil) {
       y->right->p = x;
     }
     y->p = x->p;
-    if(x->p == this->nil){
+    if(x->p == this->nil) {
       this->root = y;
     }
-    else if(x == x->p->right){
+    else if(x == x->p->right) {
       x->p->right = y;
     }
-    else{
+    else {
       x->p->left = y;
     }
     y->right = x;
     x->p = y;
   }
 
-  void rb_insert_fixup(rbnode *z){
+  void rb_insert_fixup(rbnode *z) {
     rbnode *y;
-    while(z->p->color == RED){
+    while(z->p->color == RED) {
       if(z->p == z->p->p->left) {
         y = z->p->p->right;
         if(y->color == RED) {
@@ -191,19 +193,25 @@ void generate_random_array(int *a, int n, bool silence){
     cout << endl;
 }
 
-int main(){
-  int n = 10;
-  int values[n];
-  generate_random_array(values, n, false);
-  RedBlackTree *tree = new RedBlackTree();
+int main() {
+  cout << "data = [" << endl;
+  for (int n = 1; n < 10000; n ++) {
+    int values[n];
+    generate_random_array(values, n, true);
 
-  for(int i = 0; i < n; i++){
-    tree->insert(values[i]);
+    // Start timer
+    clock_t start = clock();
+    RedBlackTree *tree = new RedBlackTree();
+    for (int i = 0; i < n; i++) {
+      tree->insert(values[i]);
+    }
+
+    // stop timer
+    cout << n << ' ' << clock() - start << ' ' << log(n) / log(2) << ';' << endl;
+
+    delete(tree);
   }
-
-  cout << tree->get_size() << endl;
-  tree->print_inorder_inverse();
-  delete(tree);
+  cout << "];" << endl;
 
   return 0;
 }
