@@ -44,41 +44,75 @@ void relax(Node *u, Node *v,  WeightMap w) {
   }
 }
 
-void dijkstra (Graph *G, WeightMap w, Node *s) {
-  initialize_single_source(G, s);
+void dijkstra (Graph *G, WeightMap w, Node *source) {
+  initialize_single_source(G, source);
   unordered_set<Node*> *S = new unordered_set<Node*>();
   PriorityQueue<Node*> *Q = new PriorityQueue<Node*>(G->V.size());
+
+  for (unsigned i = 0; i < G->V.size(); i++) {
+    Q->insert(&G->V[i]);
+  }
+
   while (!Q->isEmpty()) {
-    Node *u = Q->extractMin();
+    Node *u = Q->minimum();
     S->insert(u);
     for (unsigned i = 0; i < u->adj.size(); i++) {
       relax(u, &u->adj[i], w);
+    }
+    if (u != Q->extractMin()) {
+      cout << "WHATTT!!" << endl;
     }
   }
 }
 
 int main(int argc, char const *argv[]) {
-  // Initialize graph
   random_device rd;   // Used to initialize seed engine
-  mt19937 rng(rd());  // random number engine
-  uniform_real_distribution<float> uni(0, 1); // unbiased
+  mt19937 rng(rd());  // Random number engine
+  uniform_real_distribution<float> rand_float(0, 1);
+  uniform_int_distribution<int> rand_int(0, 9999);
 
-  unsigned v_count = 10, epsilon = 0.5;
+  unsigned v_count = 30;
+  float alpha, epsilon = 0.8; // For random edges, P((u,v) in E) = 1 - epsilon
   Graph *G = (Graph *) malloc(sizeof(Graph));
-  WeightMap *w = new WeightMap();
 
-  for (unsigned i = 0; i < v_count; i++) {
-    Node *n = (Node *) malloc(sizeof(Node));
-    G->V[i].adj.push_back(*n); // FIXME: wtf
+  // A hash tap maps (Node*, Node*) -> int
+  WeightMap w;
+
+  cout << "Initialize Vertices... ";
+  // The source node
+  Node *s = new Node();
+  G->V.push_back(*s);
+  
+  // Initialize graph with v_count nodes
+  for (unsigned i = 1; i < v_count; i++) {
+    Node *n = new Node();
+    G->V.push_back(*n);
   }
+  
+  cout << "Done" << endl << "Generating random edges... ";
 
-  for (unsigned i = 0; i < v_count - 1; i++)
-    for (unsigned j = 1; j < v_count; j++) {
-      float alpha = uni(rng);
+  // Randomly generate edges
+  for (unsigned i = 0; i < v_count - 1; i++) {
+    for (unsigned j = i + 1; j < v_count; j++) {
+      alpha = rand_float(rng);
       if (alpha > epsilon) {
+        // Add to adjacency list
         G->V[i].adj.push_back(G->V[j]);
         G->V[j].adj.push_back(G->V[i]);
+
+        // Create random weight
+        unsigned weight = rand_int(rng);
+        w[&G->V[j]][&G->V[i]] = weight;
+        w[&G->V[i]][&G->V[j]] = weight;
+        cout << endl << i << " <-> " << j << " : " << weight;
       }
     }
-}
+  }
+  
+  cout << endl << "Done" << endl << "Executing Dijkstra... " << endl;
 
+  dijkstra(G, w, s);
+  cout << "Done" << endl;
+
+  return 0;
+}
