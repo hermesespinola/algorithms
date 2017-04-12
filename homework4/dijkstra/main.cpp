@@ -59,9 +59,7 @@ void dijkstra (Graph *G, WeightMap w, Node *source) {
     for (unsigned i = 0; i < u->adj.size(); i++) {
       relax(u, &u->adj[i], w);
     }
-    if (u != Q->extractMin()) {
-      cout << "WHATTT!!" << endl;
-    }
+    Q->extractMin());
   }
 }
 
