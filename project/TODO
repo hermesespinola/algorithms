@@ -1,20 +1,20 @@
-1.- Describe the problemn you want to solve with the graph database.
+ya 1.- Describe the problemn you want to solve with the graph database.
 
 2.- Initial implementation
 
 You need to integrate in your initial implementation the following algorithms:
 
-     a Sorting
+ya     a Sorting
 
-     b Hash Tables
+casi     b Hash Tables
 
-     c Binary Search Trees
+ya     c Binary Search Trees
 
-     d Dynamic Programming - Graph Algorithms
+casi     d Dynamic Programming - Graph Algorithms
 
 
 I am expecting to see the classic:
 
-1.- Software Requirements Specification.
+ya 1.- Software Requirements Specification.
 
-2.- System Sequence Diagram
+falta 2.- System Sequence Diagram
