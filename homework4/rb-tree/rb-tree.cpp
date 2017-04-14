@@ -180,7 +180,7 @@ public:
   }
 };
 
-void generate_random_array(int *a, int n, bool silence){
+void generate_random_array(int *a, int n, bool silence) {
   random_device rd;
   mt19937 gen(rd());
   uniform_int_distribution<> dis(1,100);
