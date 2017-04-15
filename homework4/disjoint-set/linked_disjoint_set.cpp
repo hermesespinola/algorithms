@@ -40,7 +40,11 @@ class disjoint_set {
             if (x_parent == y_parent)
                 return;
             
-            x->list->append(y->list);
+            if (x->list->length < y->list->length) {
+                x->list->append(y->list);
+            } else {
+                y->list->append(x->list);
+            }
             
             // auto it = std::find(sets.begin(), sets.end(), y->list);
             // if (it != sets.end()) {
