@@ -6,12 +6,12 @@ using namespace std;
 
 class disjoint_set {
     private:
-        int *p, *rank, *size, n_sets, p_c;
+        unsigned *p, *rank, *size, n_sets, p_c;
     public:
         void make_set(unsigned n) {
-            p = new int[n];
-            rank = new int[n];
-            size = new int[n];
+            p = new unsigned[n];
+            rank = new unsigned[n];
+            size = new unsigned[n];
             for (unsigned i = 0; i < n; i++) {
                 p[i] = i;
                 size[i] = 1;
@@ -79,14 +79,3 @@ class disjoint_set {
             cout << "]" << endl;
         }
 };
-
-int main(int argc, char const *argv[]) {
-    disjoint_set *ds = new disjoint_set(10);
-    ds->print();
-    ds->uni(2, 6);
-    ds->uni(1, 2);
-    ds->uni(5, 9);
-    ds->uni(5, 2);
-    ds->print();
-    return 0;
-}

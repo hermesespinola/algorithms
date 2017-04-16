@@ -45,16 +45,6 @@ class disjoint_set {
             } else {
                 y->list->append(x->list);
             }
-            
-            // auto it = std::find(sets.begin(), sets.end(), y->list);
-            // if (it != sets.end()) {
-            //     using std::swap;
-
-            //     // swap the one to be removed with the last element
-            //     // and remove the item at the end of the container
-            //     swap(*it, sets.back());
-            //     sets.pop_back();
-            // }
 
             n_sets--;
         }
@@ -71,18 +61,3 @@ class disjoint_set {
             cout << "}" << endl;
         }
 };
-
-int main(int argc, char const *argv[]) {
-    disjoint_set *ds = new disjoint_set();
-    node *n1 = new node(11), *n2 = new node(22), *n3 = new node(33);
-
-    ds->make_set(n1);
-    ds->make_set(n2);
-    ds->make_set(n3);
-    ds->print();
-    cout << ds->is_same_set(n1, n2) << endl;
-    ds->uni(n1, n2);
-    cout << ds->is_same_set(n1, n2) << endl;
-
-    return 0;
-}
