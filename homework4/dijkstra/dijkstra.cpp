@@ -20,19 +20,14 @@ struct node {
     return this->distance > other.distance;
   }
 };
-typedef struct node Node;
 
 struct graph {
   vector<struct node> V;
-  ~graph() {
-    delete &V;
-  }
 };
-typedef struct graph Graph;
 
-typedef unordered_map<Node*, unordered_map<Node*, unsigned>> WeightMap;
+typedef unordered_map<node*, unordered_map<node*, unsigned>> WeightMap;
 
-void initialize_single_source (Graph *G, Node *source) {
+void initialize_single_source (graph *G, node *source) {
   for (unsigned i = 0; i < G->V.size(); i++) {
     G->V[i].distance = 99999999;
     G->V[i].predecesor = NULL;
@@ -40,7 +35,7 @@ void initialize_single_source (Graph *G, Node *source) {
   source->distance = 0;
 }
 
-void relax (Node *u, Node *v,  WeightMap w) {
+void relax (node *u, node *v,  WeightMap w) {
   unsigned d = (u->distance + w[u][v]);
   if (v->distance > d) {
     v->distance = d;
@@ -48,17 +43,17 @@ void relax (Node *u, Node *v,  WeightMap w) {
   }
 }
 
-void dijkstra (Graph *G, WeightMap w, Node *source) {
+void dijkstra (graph *G, WeightMap w, node *source) {
   initialize_single_source(G, source);
-  unordered_set<Node*> *S = new unordered_set<Node*>();
-  PriorityQueue<Node*> *Q = new PriorityQueue<Node*>(G->V.size());
+  unordered_set<node*> *S = new unordered_set<node*>();
+  PriorityQueue<node*> *Q = new PriorityQueue<node*>(G->V.size());
 
   for (unsigned i = 0; i < G->V.size(); i++) {
     Q->insert(&G->V[i]);
   }
 
   while (!Q->isEmpty()) {
-    Node *u = Q->minimum();
+    node *u = Q->minimum();
     S->insert(u);
     for (unsigned i = 0; i < u->adj.size(); i++) {
       relax(u, &u->adj[i], w);
@@ -67,7 +62,7 @@ void dijkstra (Graph *G, WeightMap w, Node *source) {
   }
 }
 
-Node* init_graph (Graph *G, WeightMap &w, unsigned v_count, float epsilon, unsigned &E_count, bool silent) {
+node* init_graph (graph *G, WeightMap &w, unsigned v_count, float epsilon, unsigned &E_count, bool silent) {
     if (!silent)
       cout << "Initialize Vertices... ";
     
@@ -78,12 +73,12 @@ Node* init_graph (Graph *G, WeightMap &w, unsigned v_count, float epsilon, unsig
     uniform_int_distribution<int> rand_int(0, 9999);
 
     // The source node
-    Node *s = new Node();
+    node *s = new node();
     G->V.push_back(*s);
     
     // Initialize graph with v_count nodes
     for (unsigned i = 1; i < v_count; i++) {
-      Node n;
+      node n;
       G->V.push_back(n);
     }
 
@@ -118,34 +113,23 @@ Node* init_graph (Graph *G, WeightMap &w, unsigned v_count, float epsilon, unsig
 }
 
 int main(int argc, char const *argv[]) {
-  float epsilon = 0.7; // For random edges, P((u,v) in E) = 1 - epsilon
-  
+  float epsilon = 0.4; // For random edges, P((u,v) in E) = 1 - epsilon
   cout << "data = [" << endl;
-  // for (unsigned v_count = 2; v_count <= 30; v_count++) {
-    unsigned v_count = 10;
-    Graph *G = (Graph *) malloc(sizeof(Graph));
-    // A hash table that maps (Node*, Node*) -> int
+
+  for (unsigned v_count = 2; v_count <= 30; v_count++) {
+    graph *G = new graph();
+    
+    // A hash table that maps (node*, node*) -> int
     WeightMap w;
     unsigned E_count = 0;
-
-    Node *s = init_graph(G, w, v_count, epsilon, E_count, true);
+    node *s = init_graph(G, w, v_count, epsilon, E_count, true);
 
     clock_t start = clock();
     dijkstra(G, w, s);
     cout << v_count << ' ' << clock() - start << ' ' << E_count * log(v_count) / log(2) << endl;
-    
+
     delete G;
-    delete s;
-
-    v_count = 20;
-    G = (Graph *) malloc(sizeof(Graph));
-
-    s = init_graph(G, w, v_count, epsilon, E_count, true);
-
-    start = clock();
-    dijkstra(G, w, s);
-    cout << v_count << ' ' << clock() - start << ' ' << E_count * log(v_count) / log(2) << endl;
-  // }
+  }
   cout << "];" << endl;
 
   return 0;
