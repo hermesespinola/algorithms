@@ -47,18 +47,18 @@ void dijkstra (graph *G, WeightMap w, node *source) {
   initialize_single_source(G, source);
   unordered_set<node*> *S = new unordered_set<node*>();
   PriorityQueue<node*> *Q = new PriorityQueue<node*>(G->V.size());
-
-  for (unsigned i = 0; i < G->V.size(); i++) {
-    Q->insert(&G->V[i]);
-  }
+  Q->insert(&G->V[0]);
 
   while (!Q->isEmpty()) {
-    node *u = Q->minimum();
+    node *u = Q->extractMin();
     S->insert(u);
     for (unsigned i = 0; i < u->adj.size(); i++) {
-      relax(u, &u->adj[i], w);
+      node *v = &u->adj[i];
+      relax(u, v, w);
+      if (S->find(v) != S->end()) {
+        Q->insert(v);
+      }
     }
-    Q->extractMin();
   }
 }
 

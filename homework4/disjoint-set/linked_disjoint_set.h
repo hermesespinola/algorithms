@@ -3,17 +3,17 @@
 #include <string>
 #include <stdlib.h>
 #include <vector>
-#include "linked_list.cpp"
+#include "linked_list.h"
 
 using namespace std;
 
 // Implementation with weighted-union heuristic
-class disjoint_set {
+class linked_disjoint_set {
     private:
         vector<linked_list*> sets;
         unsigned count, n_sets;
     public:
-        disjoint_set() {
+        linked_disjoint_set() {
             sets = *new vector<linked_list*>();
             n_sets = 0;
             count = 0;
@@ -39,7 +39,7 @@ class disjoint_set {
 
             if (x_parent == y_parent)
                 return;
-            
+
             if (x->list->length < y->list->length) {
                 x->list->append(y->list);
             } else {

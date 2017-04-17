@@ -194,7 +194,7 @@ void generate_random_array(int *a, int n, bool silence) {
 }
 
 int main() {
-  cout << "data = [" << endl;
+  cout << "RBTreeTime = [" << endl;
   for (int n = 1; n < 10000; n ++) {
     int values[n];
     generate_random_array(values, n, true);
